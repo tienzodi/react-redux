@@ -4,16 +4,23 @@ import {bindActionCreators} from 'redux';
 import * as courseActions from '../../actions/courseActions';
 import CourseList from './CourseList';
 import {browserHistory} from 'react-router';
+import toastr from 'toastr';
 
 class CoursesPage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
     this.redirectToAddCoursePage = this.redirectToAddCoursePage.bind(this);
+    this.onDeleteCourse = this.onDeleteCourse.bind(this);
   }
 
   redirectToAddCoursePage() {
     browserHistory.push('/course');
+  }
+
+  onDeleteCourse(id) {
+    this.props.actions.deleteCourse(id);
+    toastr.success('Course Deleted');
   }
 
   render() {
@@ -21,14 +28,20 @@ class CoursesPage extends React.Component {
     return (<div>
       <h1>Courses</h1>
       <input type="submit" className="btn btn-primary" value="Add Course" onClick={this.redirectToAddCoursePage}/>
-      <CourseList courses={courses}/>
+      <CourseList courses={courses} onDeleteCourse={this.onDeleteCourse} />
     </div>);
   }
 }
 
 CoursesPage.propTypes = {
-  courses: PropTypes.array.isRequired
+  courses: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired
 };
+
+CoursesPage.contextTypes = {
+  router: PropTypes.object
+};
+
 
 function mapStateToProps(state, ownProps) {
   return {
