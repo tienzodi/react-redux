@@ -18,9 +18,14 @@ class CoursesPage extends React.Component {
     browserHistory.push('/course');
   }
 
-  onDeleteCourse(id) {
-    this.props.actions.deleteCourse(id);
-    toastr.success('Course Deleted');
+  onDeleteCourse(course) {
+    let that = this;
+    return function (e) {
+      e.preventDefault();
+
+      that.props.actions.deleteCourse(course.id);
+      toastr.success('Course Deleted');
+    };
   }
 
   render() {

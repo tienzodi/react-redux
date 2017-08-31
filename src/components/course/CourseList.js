@@ -19,7 +19,7 @@ const CourseList = ({courses, onDeleteCourse}) => {
       </thead>
       <tbody>
       {courses.map(course =>
-        <CourseListRow key={course.id} course={course} onDelete={onDeleteCourse(course.id)}/>
+        <CourseListRow key={course.id} course={course} onDelete={onDeleteCourse(course)}/>
       )}
       </tbody>
     </table>
